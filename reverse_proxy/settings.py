@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mozilla_django_oidc',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +100,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Auth Backends 
+AUTHENTICATION_BACKENDS = (
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    # ...
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -118,3 +125,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# OIDC SHIT
+OIDC_RP_CLIENT_ID = ""
+OIDC_RP_CLIENT_SECRET = ""
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "<URL of the OIDC OP authorization endpoint>"
+OIDC_OP_TOKEN_ENDPOINT = "<URL of the OIDC OP token endpoint>"
+OIDC_OP_USER_ENDPOINT = "<URL of the OIDC OP userinfo endpoint>"
+
+LOGIN_REDIRECT_URL = "<URL path to redirect to after login>"
+LOGOUT_REDIRECT_URL = "<URL path to redirect to after logout>"
+
+

@@ -8,7 +8,7 @@ def reverse_proxy(request):
     path = request.get_full_path()
     #Optionally, rewrite the path to fit whatever service we're proxying to.
     
-    url = "http://%s%s" % ("localhost:8000", path)
+    url = "http://%s%s" % ("localhost:8080", path)
 
     import requests
     requestor = getattr(requests, request.method.lower())
@@ -17,6 +17,9 @@ def reverse_proxy(request):
     
     from django.http.response import HttpResponse
     response = HttpResponse(proxied_response.content, content_type=proxied_response.headers.get('content-type'))
-    for header_key, header_value in proxied_response.headers.iteritems():
-        response[header_key] = header_value
+    for header_key, header_value in proxied_response.headers.items():
+        if header_key.upper() == "CONNECTION":
+            pass
+        else:
+            response[header_key] = header_value
     return response
