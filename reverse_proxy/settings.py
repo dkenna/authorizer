@@ -25,7 +25,7 @@ SECRET_KEY = 'tq%m58q@_kne24xc0x)+73bdx=5)21st0*o6wlo+6%i!1oj@0g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testrp']
+ALLOWED_HOSTS = ['testrp','localhost','testrp.localauth.com','resourceprovider.localauth.com']
 
 
 # Application definition

@@ -19,14 +19,19 @@ def reverse_proxy(request):
     Reverse proxy for a remote service.
     """
     path = request.get_full_path()
+    print(path)
     #Optionally, rewrite the path to fit whatever service we're proxying to.
     
+    #url = "http://%s%s" % ("resourceprovider.localauth.com:8080", path)
     url = "http://%s%s" % ("localhost:8080", path)
+    print(url)
 
     import requests
     requestor = getattr(requests, request.method.lower())
     
     proxied_response = requestor(url, data=request.body, files=request.FILES)
+    #proxied_response = requestor(url, data=str(request.body,"utf-8"), files=request.FILES)
+    #proxied_response = requestor(url, data=str(request.body,"utf-8"), files={})
     
     from django.http.response import HttpResponse
     response = HttpResponse(proxied_response.content, content_type=proxied_response.headers.get('content-type'))
