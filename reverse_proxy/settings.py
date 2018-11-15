@@ -25,7 +25,7 @@ SECRET_KEY = 'tq%m58q@_kne24xc0x)+73bdx=5)21st0*o6wlo+6%i!1oj@0g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testrp']
 
 
 # Application definition
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'reverse_proxy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Auth Backends 
 AUTHENTICATION_BACKENDS = (
     'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
     # ...
 )
 
@@ -128,14 +129,18 @@ STATIC_URL = '/static/'
 
 
 # OIDC SHIT
-OIDC_RP_CLIENT_ID = ""
-OIDC_RP_CLIENT_SECRET = ""
+OIDC_RP_CLIENT_ID = "319410"
+OIDC_RP_CLIENT_SECRET = "0962da184e903403d472b2d4e00d3be5b16c525c53aa5ac90f39d665"
 
-OIDC_OP_AUTHORIZATION_ENDPOINT = "<URL of the OIDC OP authorization endpoint>"
-OIDC_OP_TOKEN_ENDPOINT = "<URL of the OIDC OP token endpoint>"
-OIDC_OP_USER_ENDPOINT = "<URL of the OIDC OP userinfo endpoint>"
+OIDC_OP_AUTHORIZATION_ENDPOINT = "http://oidcprovider:8000/openid/authorize"
+OIDC_OP_TOKEN_ENDPOINT = "http://oidcprovider:8000/openid/token"
+OIDC_OP_USER_ENDPOINT = "http://oidcprovider:8000/openid/userinfo"
+OIDC_RP_SIGN_ALGO = 'RS256'
+OIDC_OP_JWKS_ENDPOINT = "http://oidcprovider:8000/openid/jwks"
 
-LOGIN_REDIRECT_URL = "<URL path to redirect to after login>"
-LOGOUT_REDIRECT_URL = "<URL path to redirect to after logout>"
+LOGIN_URL = '/login'
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 
