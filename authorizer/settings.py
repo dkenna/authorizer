@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$ve+kq$j71kh%#ooy!df+&*no60o^vy5&2p4w2$=jy26^y*a+q'
+SECRET_KEY = 'tq%m58q@_kne24xc0x)+73bdx=5)21st0*o6wlo+6%i!1oj@0g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testrp','localhost','testrp.localauth.com','resourceprovider.localauth.com']
 
 
 # Application definition
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mozilla_django_oidc',
+    'oauth2_provider',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'authorizer.urls'
@@ -54,7 +60,7 @@ ROOT_URLCONF = 'authorizer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,6 +105,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Auth Backends 
+AUTHENTICATION_BACKENDS = (
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    # ...
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -118,3 +131,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# OIDC SHIT
+OIDC_RP_CLIENT_ID = "488892"
+OIDC_RP_CLIENT_SECRET = "f6095c4df003c5ce386bca06a885a44f03ce8ecdc0151167aa742c1c"
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "http://oidcprovider:8000/openid/authorize"
+OIDC_OP_TOKEN_ENDPOINT = "http://oidcprovider:8000/openid/token"
+OIDC_OP_USER_ENDPOINT = "http://oidcprovider:8000/openid/userinfo"
+OIDC_RP_SIGN_ALGO = 'RS256'
+OIDC_OP_JWKS_ENDPOINT = "http://oidcprovider:8000/openid/jwks"
+
+LOGIN_URL = '/login'
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login"
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+SESSION_COOKIE_NAME = "authz_session_id"
+
+"""LOGGING = {
+    'loggers': {
+        'mozilla_django_oidc': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+    }
+}"""
