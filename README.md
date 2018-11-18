@@ -1,3 +1,2 @@
-# reverse_proxy
+# authorizer
 
-Gateway implementing authentication features. 
